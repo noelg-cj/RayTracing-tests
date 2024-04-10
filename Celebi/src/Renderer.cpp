@@ -1,5 +1,7 @@
 #include "Renderer.h"
 
+#include "Walnut/Random.h"
+
 void Renderer::OnResize(uint32_t width, uint32_t height)
 {
 	if (m_FinalImage) {
@@ -18,7 +20,9 @@ void Renderer::OnResize(uint32_t width, uint32_t height)
 
 void Renderer::Render() {
 	for (uint32_t i = 0; i < m_FinalImage->GetWidth() * m_FinalImage->GetHeight(); i++) {
-		m_ImageData[i] = 0xffffe0724a;
+		m_ImageData[i] = Walnut::Random::UInt();
+		m_ImageData[i] |= 0xff000000;
+		//m_ImageData[i] = 0xffffe0724a;
 	}
 
 	m_FinalImage->SetData(m_ImageData);
