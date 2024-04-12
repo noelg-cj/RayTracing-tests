@@ -71,9 +71,17 @@ glm::vec4 Renderer::PerPixel(glm::vec2 coord)
 	// b^2 - 4ac
 	float discriminant = b * b - 4.0f * a * c;
 
-	if (discriminant >= 0.0f) {
-		return glm::vec4(65.0f/255.0f, 98.0f/255.0f, 166.0f/255.0f, 1);
+	if (discriminant < 0.0f) {
+		return glm::vec4(0, 0, 0, 1);
 	}
 
-	return glm::vec4(0, 0, 0, 1);
+	// -b +- sqrt(b^2 - 4ac) / 2a
+	float t0 = (-b + glm::sqrt(discriminant)) / 2.0f * a;
+	float t1 = (-b - glm::sqrt(discriminant)) / 2.0f * a;
+
+	glm::vec3 h0 = rayOrigin + rayDirection * t0;
+	glm::vec3 h1 = rayOrigin + rayDirection * t1;
+
+	glm::vec3 sphereColor(65.0f / 255.0f, 98.0f / 255.0f, 166.0f / 255.0f);
+	return glm::vec4(sphereColor, 1.0f);
 }
