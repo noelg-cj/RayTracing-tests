@@ -66,7 +66,6 @@ glm::vec4 Renderer::TraceRay(const Ray& ray)
 	float c = glm::dot(ray.Origin, ray.Origin) - radius * radius;
 
 	// b^2 - 4ac
-	// goofy ahh
 	float discriminant = b * b - 4.0f * a * c;
 
 	if (discriminant < 0.0f) {
