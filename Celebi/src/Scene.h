@@ -10,5 +10,5 @@ struct Sphere {
 };
 
 struct Scene {
-	std::vector<Sphere> Sphere;
+	std::vector<Sphere> Spheres;
 };

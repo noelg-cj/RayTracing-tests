@@ -32,7 +32,7 @@ void Renderer::OnResize(uint32_t width, uint32_t height)
 }
 
 
-void Renderer::Render(const Camera& camera) {
+void Renderer::Render(const Scene& scene, const Camera& camera) {
 	Ray ray;
 	ray.Origin = camera.GetPosition();
 
@@ -40,7 +40,7 @@ void Renderer::Render(const Camera& camera) {
 	for (uint32_t y = 0; y < m_FinalImage->GetHeight(); y++) {
 		for (uint32_t x = 0; x < m_FinalImage->GetWidth(); x++) {
 			ray.Direction = camera.GetRayDirections()[x + y * m_FinalImage->GetWidth()];
-			glm::vec4 color = TraceRay(ray);
+			glm::vec4 color = TraceRay(scene, ray);
 			color = glm::clamp(color, glm::vec4(0.0f), glm::vec4(1.0f));
 			m_ImageData[x + y * m_FinalImage->GetWidth()] = Utils::ConvertToRGBA(color);
 
@@ -52,20 +52,24 @@ void Renderer::Render(const Camera& camera) {
 	m_FinalImage->SetData(m_ImageData);
 }
 
-glm::vec4 Renderer::TraceRay(const Ray& ray)
+glm::vec4 Renderer::TraceRay(const Scene& scene, const Ray& ray)
 {
-	float radius = 0.5f;
+	if (scene.Spheres.size() == 0) {
+		return glm::vec4(0, 0, 0, 1);
+	}
+
+	const Sphere& sphere = scene.Spheres[0];
 
 	// This is some mediocre nerd shit
 	// Simplifying the circle equation
 	// (bx^2 + by^2)t^2 + (2(axbx + ayby))t + (ax^2 + ay^2 - r^2) = 0
 	// a = ray origin, b = ray direction, r = radius of the sphere, t = hit distance
 
-	glm::vec3 origin = ray.Origin - glm::vec3(-0.5f, 0.0f, 0.0f);
+	glm::vec3 origin = ray.Origin - sphere.Position;
 
 	float a = glm::dot(ray.Direction, ray.Direction);
 	float b = 2.0f * glm::dot(origin, ray.Direction);
-	float c = glm::dot(origin, origin) - radius * radius;
+	float c = glm::dot(origin, origin) - sphere.Radius * sphere.Radius;
 
 	// b^2 - 4ac
 	float discriminant = b * b - 4.0f * a * c;
@@ -85,7 +89,8 @@ glm::vec4 Renderer::TraceRay(const Ray& ray)
 
 	float d = glm::max(glm::dot(normal, -lightDir), 0.0f);
 
-	glm::vec3 sphereColor(105.0f / 255.0f, 198.0f / 255.0f, 216.0f / 255.0f);
+	//glm::vec3 sphereColor(105.0f / 255.0f, 198.0f / 255.0f, 216.0f / 255.0f);
+	glm::vec3 sphereColor = sphere.Albedo;
 	sphereColor *= d;
 
 	return glm::vec4(sphereColor, 1.0f);
