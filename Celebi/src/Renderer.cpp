@@ -61,9 +61,11 @@ glm::vec4 Renderer::TraceRay(const Ray& ray)
 	// (bx^2 + by^2)t^2 + (2(axbx + ayby))t + (ax^2 + ay^2 - r^2) = 0
 	// a = ray origin, b = ray direction, r = radius of the sphere, t = hit distance
 
+	glm::vec3 origin = ray.Origin - glm::vec3(-0.5f, 0.0f, 0.0f);
+
 	float a = glm::dot(ray.Direction, ray.Direction);
-	float b = 2.0f * glm::dot(ray.Origin, ray.Direction);
-	float c = glm::dot(ray.Origin, ray.Origin) - radius * radius;
+	float b = 2.0f * glm::dot(origin, ray.Direction);
+	float c = glm::dot(origin, origin) - radius * radius;
 
 	// b^2 - 4ac
 	float discriminant = b * b - 4.0f * a * c;
@@ -76,7 +78,7 @@ glm::vec4 Renderer::TraceRay(const Ray& ray)
 	float t0 = (-b + glm::sqrt(discriminant)) / (2.0f * a);
 	float closestT = (-b - glm::sqrt(discriminant)) / (2.0f * a);
 
-	glm::vec3 hitPoint = ray.Origin + ray.Direction * closestT;
+	glm::vec3 hitPoint = origin + ray.Direction * closestT;
 	glm::vec3 normal = glm::normalize(hitPoint);
 
 	glm::vec3 lightDir = glm::normalize(glm::vec3(-1, -1, -1));
