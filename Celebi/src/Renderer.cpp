@@ -33,6 +33,10 @@ void Renderer::OnResize(uint32_t width, uint32_t height)
 
 
 void Renderer::Render(const Scene& scene, const Camera& camera) {
+
+	m_ActiveScene = &scene;
+	m_ActiveCamera = &camera;
+
 	Ray ray;
 	ray.Origin = camera.GetPosition();
 
