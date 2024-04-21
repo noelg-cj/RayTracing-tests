@@ -17,18 +17,26 @@ public:
 	ExampleLayer()
 		: m_camera(45.0f, 0.1f, 100.0f)
 	{
+		Material& blueSphere = m_Scene.Materials.emplace_back();
+		blueSphere.Albedo = { 0.2f, 0.3f, 1.0f };
+		blueSphere.Roughness = 0.1f;
+
+		Material& pinkSphere = m_Scene.Materials.emplace_back();
+		pinkSphere.Albedo = { 1.0f, 0.0f, 1.0f };
+		pinkSphere.Roughness = 0.0f;
+
 		{
 			Sphere sphere;
 			sphere.Position = { 0.0f, -101.0f, 1.0f };
 			sphere.Radius = 100.0f;
-			sphere.Mat.Albedo = { 0.2f, 0.3f, 1.0f };
+			sphere.MaterialIndex = 0;
 			m_Scene.Spheres.push_back(sphere);
 		}
 		{
 			Sphere sphere;
 			sphere.Position = { 0.0f, 0.0f, 0.0f };
 			sphere.Radius = 1.0f;
-			sphere.Mat.Albedo = { 1.0f, 0.0f, 1.0f };
+			sphere.MaterialIndex = 1;
 			m_Scene.Spheres.push_back(sphere);
 		}
 		/* {
