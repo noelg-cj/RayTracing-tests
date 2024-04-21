@@ -40,6 +40,7 @@ public:
 	{
 		ImGui::Begin("Settings");
 		ImGui::Text("Last Render: %.3fms", m_LastRenderTime);
+		ImGui::Text("FPS: %d", (int)(1000.0f / m_LastRenderTime));
 		if (ImGui::Button("Render")) {
 			Render();
 		}
