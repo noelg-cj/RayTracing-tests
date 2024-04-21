@@ -29,6 +29,9 @@ void Renderer::OnResize(uint32_t width, uint32_t height)
 
 	delete[] m_ImageData;
 	m_ImageData = new uint32_t[width * height];
+
+	delete[] m_AccumulationData;
+	m_AccumulationData = new glm::vec4[width * height];
 }
 
 
@@ -50,6 +53,11 @@ void Renderer::Render(const Scene& scene, const Camera& camera) {
 	
 
 	m_FinalImage->SetData(m_ImageData);
+
+	if (m_Settings.Accumulate)
+		m_FrameIndex++;
+	else
+		m_FrameIndex = 1;
 }
 
 glm::vec4 Renderer::PerPixel(uint32_t x, uint32_t y) {
@@ -60,7 +68,7 @@ glm::vec4 Renderer::PerPixel(uint32_t x, uint32_t y) {
 	glm::vec3 color(0.0f);
 	float multiplier = 1.0f;
 
-	int bounces = 2;
+	int bounces = 5;
 	for (int i = 0; i < bounces; i++) {
 		Renderer::HitPayload payload = TraceRay(ray);
 		if (payload.HitDistance < 0.0f) {
