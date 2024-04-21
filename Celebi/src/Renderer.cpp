@@ -75,7 +75,7 @@ glm::vec4 Renderer::PerPixel(uint32_t x, uint32_t y) {
 		const Sphere& sphere = m_ActiveScene->Spheres[payload.ObjectIndex];
 
 		//glm::vec3 sphereColor(105.0f / 255.0f, 198.0f / 255.0f, 216.0f / 255.0f);
-		glm::vec3 sphereColor = sphere.Albedo;
+		glm::vec3 sphereColor = sphere.Mat.Albedo;
 		sphereColor *= lightIntensity;
 
 		color += sphereColor * multiplier;
