@@ -40,14 +40,22 @@ void Renderer::Render(const Scene& scene, const Camera& camera) {
 	m_ActiveScene = &scene;
 	m_ActiveCamera = &camera;
 
-	float aspectRatio = m_FinalImage->GetWidth() / (float)m_FinalImage->GetHeight();
-	for (uint32_t y = 0; y < m_FinalImage->GetHeight(); y++) {
-		for (uint32_t x = 0; x < m_FinalImage->GetWidth(); x++) {
-			glm::vec4 color = PerPixel(x, y);
-			color = glm::clamp(color, glm::vec4(0.0f), glm::vec4(1.0f));
-			m_ImageData[x + y * m_FinalImage->GetWidth()] = Utils::ConvertToRGBA(color);
+	if (m_FrameIndex == 1)
+		memset(m_AccumulationData, 0, m_FinalImage->GetWidth() * m_FinalImage->GetHeight() * sizeof(glm::vec4));
 
-			//m_ImageData[i] = 0xffffe0724a;
+	float aspectRatio = m_FinalImage->GetWidth() / (float)m_FinalImage->GetHeight();
+	for (uint32_t y = 0; y < m_FinalImage->GetHeight(); y++) 
+	{
+		for (uint32_t x = 0; x < m_FinalImage->GetWidth(); x++) 
+		{
+			glm::vec4 color = PerPixel(x, y);
+			m_AccumulationData[x + y * m_FinalImage->GetWidth()] += color;
+
+			glm::vec4 AccumulatedColor = m_AccumulationData[x + y * m_FinalImage->GetWidth()];
+			AccumulatedColor /= (float)m_FrameIndex;
+
+			AccumulatedColor = glm::clamp(AccumulatedColor, glm::vec4(0.0f), glm::vec4(1.0f));
+			m_ImageData[x + y * m_FinalImage->GetWidth()] = Utils::ConvertToRGBA(AccumulatedColor);
 		}
 	}
 	
