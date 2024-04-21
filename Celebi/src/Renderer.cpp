@@ -82,7 +82,7 @@ glm::vec4 Renderer::PerPixel(uint32_t x, uint32_t y) {
 		multiplier *= 0.7;
 
 		ray.Origin = payload.WorldPosition + payload.WorldNormal * 0.0001f;
-		ray.Direction = glm::reflect(ray.Direction, payload.WorldNormal);
+		ray.Direction = glm::reflect(ray.Direction, payload.WorldNormal + sphere.Mat.Roughness * Walnut::Random::Vec3(-0.5f, 0.5f));
 
 	}
 
