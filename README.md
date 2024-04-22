@@ -1,6 +1,7 @@
-# Walnut App Template
+# Ray Tracing Tests
 
-This is a simple app template for [Walnut](https://github.com/TheCherno/Walnut) - unlike the example within the Walnut repository, this keeps Walnut as an external submodule and is much more sensible for actually building applications. See the [Walnut](https://github.com/TheCherno/Walnut) repository for more details.
+Ray Tracing is the algorithm for calculating the lighting by sending individual rays from each pixel on the camera and getting the color of the pixel by use of accurate light bounces.
+This repository is used to experiment with raytracing algorithms based on the "Ray Tracing in One Weekend" book and RayTracing Series by The Cherno
 
-## Getting Started
-Once you've cloned, you can customize the `premake5.lua` and `WalnutApp/premake5.lua` files to your liking (eg. change the name from "WalnutApp" to something else).  Once you're happy, run `scripts/Setup.bat` to generate Visual Studio 2022 solution/project files. Your app is located in the `WalnutApp/` directory, which some basic example code to get you going in `WalnutApp/src/WalnutApp.cpp`. I recommend modifying that WalnutApp project to create your own application, as everything should be setup and ready to go.
+Example Scene, rendered:
+![image](https://github.com/noelg-cj/RayTracing-tests/assets/76249580/abcab35a-e596-4d14-baca-c3203c99d8ac)
