@@ -29,7 +29,13 @@ public:
 		orangeSphere.Albedo = { 0.8f, 0.5f, 0.2f };
 		orangeSphere.Roughness = 0.1f;
 		orangeSphere.EmissionColor = orangeSphere.Albedo;
-		orangeSphere.EmissionPower = 2.0f;
+		orangeSphere.EmissionPower = 8.0f;
+
+		Material& blueEmissiveSphere = m_Scene.Materials.emplace_back();
+		blueEmissiveSphere.Albedo = { 26.0f/255.0f, 155.0f/255.0f, 217.0f/255.0f };
+		blueEmissiveSphere.Roughness = 0.1f;
+		blueEmissiveSphere.EmissionColor = blueEmissiveSphere.Albedo;
+		blueEmissiveSphere.EmissionPower = 3.5f;
 
 
 		{
@@ -39,6 +45,7 @@ public:
 			sphere.MaterialIndex = 0;
 			m_Scene.Spheres.push_back(sphere);
 		}
+
 		{
 			Sphere sphere;
 			sphere.Position = { 0.0f, 0.0f, 0.0f };
@@ -49,9 +56,49 @@ public:
 
 		{
 			Sphere sphere;
-			sphere.Position = { 3.0f, 1.0f, 0.0f };
-			sphere.Radius = 1.5f;
+			sphere.Position = { 0.7f, -0.7f, 1.5f };
+			sphere.Radius = 0.3f;
+			sphere.MaterialIndex = 1;
+			m_Scene.Spheres.push_back(sphere);
+		}
+
+		{
+			Sphere sphere;
+			sphere.Position = { -1.3f, -0.75f, 0.1f };
+			sphere.Radius = 0.25f;
+			sphere.MaterialIndex = 1;
+			m_Scene.Spheres.push_back(sphere);
+		}
+
+		{
+			Sphere sphere;
+			sphere.Position = { 1.5f, -0.5f, 1.0f };
+			sphere.Radius = 0.5f;
+			sphere.MaterialIndex = 1;
+			m_Scene.Spheres.push_back(sphere);
+		}
+
+		{
+			Sphere sphere;
+			sphere.Position = { -1.5f, -0.9f, 1.0f };
+			sphere.Radius = 0.1f;
+			sphere.MaterialIndex = 1;
+			m_Scene.Spheres.push_back(sphere);
+		}
+
+		{
+			Sphere sphere;
+			sphere.Position = { 12.0f, -0.5f, 0.0f };
+			sphere.Radius = 4.0f;
 			sphere.MaterialIndex = 2;
+			m_Scene.Spheres.push_back(sphere);
+		}
+
+		{
+			Sphere sphere;
+			sphere.Position = { -7.5f, 0.5f, 3.0f };
+			sphere.Radius = 2.5f;
+			sphere.MaterialIndex = 3;
 			m_Scene.Spheres.push_back(sphere);
 		}
 	}

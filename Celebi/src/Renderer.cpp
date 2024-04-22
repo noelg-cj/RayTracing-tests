@@ -109,7 +109,7 @@ glm::vec4 Renderer::PerPixel(uint32_t x, uint32_t y) {
 	for (int i = 0; i < bounces; i++) {
 		Renderer::HitPayload payload = TraceRay(ray);
 		if (payload.HitDistance < 0.0f) {
-			glm::vec3 skyColor = glm::vec3(0.6f, 0.7f, 0.9f);
+			glm::vec3 skyColor = glm::vec3(0.2f, 0.3f, 0.4f);
 			//light += skyColor * contribution;
 			break;
 		}
