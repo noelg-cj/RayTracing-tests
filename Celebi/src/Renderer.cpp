@@ -53,7 +53,7 @@ void Renderer::Render(const Scene& scene, const Camera& camera) {
 	if (m_FrameIndex == 1)
 		memset(m_AccumulationData, 0, m_FinalImage->GetWidth() * m_FinalImage->GetHeight() * sizeof(glm::vec4));
 
-#define MT 1
+#define MT 0
 #if MT
 	std::for_each(std::execution::par, m_ImageVerticalIterator.begin(), m_ImageVerticalIterator.end(),
 		[this](uint32_t y)
@@ -114,17 +114,11 @@ glm::vec4 Renderer::PerPixel(uint32_t x, uint32_t y) {
 			break;
 		}
 
-		glm::vec3 lightDir = glm::normalize(glm::vec3(-1, -1, -1));
-		float lightIntensity = glm::max(glm::dot(payload.WorldNormal, -lightDir), 0.0f);
-
 		const Sphere& sphere = m_ActiveScene->Spheres[payload.ObjectIndex];
 		const Material& material = m_ActiveScene->Materials[sphere.MaterialIndex];
 
 		//glm::vec3 sphereColor(105.0f / 255.0f, 198.0f / 255.0f, 216.0f / 255.0f);
-		glm::vec3 sphereColor = material.Albedo;
-		sphereColor *= lightIntensity;
-
-		color += sphereColor * multiplier;
+		color += material.Albedo * multiplier;
 		multiplier *= 0.5;
 
 		ray.Origin = payload.WorldPosition + payload.WorldNormal * 0.0001f;
