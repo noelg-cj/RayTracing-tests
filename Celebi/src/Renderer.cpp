@@ -38,9 +38,9 @@ void Renderer::OnResize(uint32_t width, uint32_t height)
 	m_ImageHorizontalIterator.resize(width);
 	m_ImageVerticalIterator.resize(height);
 
-	for (int i = 0; i < width; i++)
+	for (uint32_t i = 0; i < width; i++)
 		m_ImageHorizontalIterator[i] = i;
-	for (int i = 0; i < height; i++)
+	for (uint32_t i = 0; i < height; i++)
 		m_ImageVerticalIterator[i] = i;
 }
 
@@ -163,7 +163,7 @@ Renderer::HitPayload Renderer::TraceRay(const Ray& ray)
 		}
 
 		// -b +- sqrt(b^2 - 4ac) / 2a
-		//float t0 = (-b + glm::sqrt(discriminant)) / (2.0f * a);
+		//float t0 = (-b + glm::sqrt(discriminant)) / (2.0f * a); -> farther away
 		float closestT = (-b - glm::sqrt(discriminant)) / (2.0f * a);
 
 		if (closestT > 0.0f && closestT < hitDistance) {
@@ -172,6 +172,7 @@ Renderer::HitPayload Renderer::TraceRay(const Ray& ray)
 		}
 	}
 
+	// If no sphere was hit
 	if (closestSphere < 0) {
 		return Miss(ray);
 	}
